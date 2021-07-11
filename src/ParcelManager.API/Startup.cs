@@ -12,6 +12,8 @@ using ParcelManager.API.Services;
 using ParcelManager.Core.Interfaces;
 using ParcelManager.Infrastructure.Data.Context;
 using ParcelManager.Infrastructure.Data.Repositories;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ParcelManager.API
 {
@@ -28,8 +30,11 @@ namespace ParcelManager.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+            services.AddScoped(typeof(IShipmentRepository), typeof(ShipmentRepository));
 
             services.AddScoped<IShipmentDtoService, ShipmentDtoService>();
+            services.AddScoped<IBagDtoService, BagDtoService>();
+            services.AddScoped<IParcelDtoService, ParcelDtoService>();
 
             services.AddDbContext<ParcelContext>(options =>
             {
@@ -43,7 +48,9 @@ namespace ParcelManager.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParcelManager", Version = "v1" });
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddJsonOptions(jsonOptions =>
+                jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+            );
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

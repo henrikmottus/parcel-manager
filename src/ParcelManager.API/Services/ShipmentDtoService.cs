@@ -9,11 +9,11 @@ namespace ParcelManager.API.Services
 {
     public class ShipmentDtoService : IShipmentDtoService
     {
-        private readonly IAsyncRepository<Shipment> _shipmentRepository;
+        private readonly IShipmentRepository _shipmentRepository;
 
         private readonly IMapper _mapper;
 
-        public ShipmentDtoService(IAsyncRepository<Shipment> shipmentRepository, IMapper mapper)
+        public ShipmentDtoService(IShipmentRepository shipmentRepository, IMapper mapper)
         {
             _shipmentRepository = shipmentRepository;
             _mapper = mapper;
@@ -40,7 +40,7 @@ namespace ParcelManager.API.Services
 
         public async Task<ShipmentDto> GetShipment(int id)
         {
-            var shipment = await _shipmentRepository.GetByIdAsync(id);
+            var shipment = await _shipmentRepository.GetWithBagsAndParcelsAsync(id);
 
             return _mapper.Map<ShipmentDto>(shipment);
         }

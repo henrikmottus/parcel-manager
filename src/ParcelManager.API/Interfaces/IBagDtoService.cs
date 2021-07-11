@@ -5,7 +5,6 @@ namespace ParcelManager.API.Interfaces
 {
     public interface IBagDtoService
     {
-        Task<BagListDto> ListBagsForShipment(int shipmentId);
-        Task<BagDto> AddBag(BagDto bagDto);
+        Task<BagDto> AddBag(BagAddDto bagDto);
     }
 }

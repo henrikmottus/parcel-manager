@@ -4,6 +4,7 @@
     {
         public string BagNumber { get; set; } = default!;
 
+        public int ShipmentId { get; set; }
         public Shipment Shipment { get; set; } = default!;
     }
 }

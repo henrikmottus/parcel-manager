@@ -5,6 +5,6 @@ namespace ParcelManager.API.Interfaces
 {
     public interface IParcelDtoService
     {
-        Task<ParcelDto> AddParcel(ParcelDto parcelDto);
+        Task<ParcelDto> AddParcel(ParcelAddDto parcelDto);
     }
 }
