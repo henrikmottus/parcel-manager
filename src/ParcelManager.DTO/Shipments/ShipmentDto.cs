@@ -1,10 +1,11 @@
+﻿using ParcelManager.DTO.Bags;
+using ParcelManager.DTO.Base;
 using ParcelManager.DTO.Enums;
 using System;
-using System.Collections.Generic;
 
-namespace ParcelManager.Core.Entities
+namespace ParcelManager.DTO.Shipments
 {
-    public class Shipment : BaseEntity
+    public class ShipmentDto : BaseDto
     {
         public string ShipmentNumber { get; set; } = default!;
         public Airports Airport { get; set; } = default!;
@@ -12,6 +13,6 @@ namespace ParcelManager.Core.Entities
         public DateTime? FlightDate { get; set; } = default!;
         public bool IsFinalized { get; set; }
 
-        public ICollection<Bag> Bags { get; set; } = default!;
+        public BagListDto Bags { get; set; } = default!;
     }
 }

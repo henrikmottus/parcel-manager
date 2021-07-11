@@ -1,4 +1,4 @@
-﻿namespace ParcelManager.Core.Enums
+﻿namespace ParcelManager.DTO.Enums
 {
     public enum Airports
     {

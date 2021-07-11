@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ParcelManager.API.Interfaces;
+using ParcelManager.DTO.Base;
+using ParcelManager.DTO.Enums;
+using ParcelManager.DTO.Shipments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +16,55 @@ namespace ParcelManager.API.Controllers
     [ApiController]
     public class ShipmentController : ControllerBase
     {
-        // GET: api/<ShipmentController>
+        private readonly IShipmentDtoService _shipmentDtoService;
+
+        public ShipmentController(IShipmentDtoService shipmentDtoService)
+        {
+            _shipmentDtoService = shipmentDtoService;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<Response<ShipmentListDto>> List()
         {
-            return new string[] { "value1", "value2" };
+            return new Response<ShipmentListDto>
+            {
+                Status = ResponseStatuses.Success,
+                Message = "Successfully retrieved shipments!",
+                Data = await _shipmentDtoService.ListShipments()
+            };
         }
 
-        // GET api/<ShipmentController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<Response<ShipmentDto>> Get(int id)
         {
-            return "value";
+            return new Response<ShipmentDto>
+            {
+                Status = ResponseStatuses.Success,
+                Message = "Successfully retrieved shipment!",
+                Data = await _shipmentDtoService.GetShipment(id)
+            };
         }
 
-        // POST api/<ShipmentController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<Response<ShipmentDto>> Post([FromBody] ShipmentAddDto shipmentDto)
         {
+            return new Response<ShipmentDto>
+            {
+                Status = ResponseStatuses.Success,
+                Message = "Successfully added shipment!",
+                Data = await _shipmentDtoService.AddShipment(shipmentDto)
+            };
         }
 
-        // PUT api/<ShipmentController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("finalize/{id}")]
+        public async Task<Response<ShipmentDto>> Put(int id)
         {
-        }
-
-        // DELETE api/<ShipmentController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return new Response<ShipmentDto>
+            {
+                Status = ResponseStatuses.Success,
+                Message = "Successfully finalized shipment!",
+                Data = await _shipmentDtoService.FinalizeShipment(id)
+            };
         }
     }
 }

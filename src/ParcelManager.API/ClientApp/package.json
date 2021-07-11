@@ -1,5 +1,5 @@
 {
-  "name": "parcelmanager.api",
+  "name": "parcel-manager-fe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

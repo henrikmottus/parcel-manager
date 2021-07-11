@@ -1,10 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ParcelManager.API.Automapper.Profiles;
+using ParcelManager.API.Interfaces;
+using ParcelManager.API.Services;
+using ParcelManager.Core.Interfaces;
+using ParcelManager.Infrastructure.Data.Context;
+using ParcelManager.Infrastructure.Data.Repositories;
 
 namespace ParcelManager.API
 {
@@ -20,15 +27,20 @@ namespace ParcelManager.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ParcelsContext>(options =>
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(AsyncRepository<>));
+
+            services.AddScoped<IShipmentDtoService, ShipmentDtoService>();
+
+            services.AddDbContext<ParcelContext>(options =>
             {
-                options.UseSqlServer(Configuration["Database:ConnectionStrings:Parcels"]);
-                
+                options.UseSqlServer(Configuration["ConnectionStrings:Parcel"]);                
             });
 
+            services.AddAutoMapper(typeof(BaseProfile));
+            
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Csp.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParcelManager", Version = "v1" });
             });
 
             services.AddControllersWithViews();
@@ -46,6 +58,8 @@ namespace ParcelManager.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ParcelManager v1"));
             }
             else
             {

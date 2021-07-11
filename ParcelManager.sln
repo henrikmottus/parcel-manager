@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelManager.API", "src\ParcelManager.API\ParcelManager.API.csproj", "{DBCF3442-7A3E-4559-96B4-434CFE2D7978}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E1ABF930-5AB9-4A0E-970A-C48E47D05DEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelManager.Core", "src\ParcelManager.Core\ParcelManager.Core.csproj", "{DFB5EF7B-DA2C-44BF-ADF1-9876DF324E10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelManager.API", "src\ParcelManager.API\ParcelManager.API.csproj", "{DBCF3442-7A3E-4559-96B4-434CFE2D7978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelManager.Infrastructure", "src\ParcelManager.Infrastructure\ParcelManager.Infrastructure.csproj", "{C6CA6D9E-DDA2-4553-A9FA-985BBBE68F50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelManager.Core", "src\ParcelManager.Core\ParcelManager.Core.csproj", "{DFB5EF7B-DA2C-44BF-ADF1-9876DF324E10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelManager.Infrastructure", "src\ParcelManager.Infrastructure\ParcelManager.Infrastructure.csproj", "{C6CA6D9E-DDA2-4553-A9FA-985BBBE68F50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelManager.DTO", "src\ParcelManager.DTO\ParcelManager.DTO.csproj", "{443EF379-F939-4CC2-9517-3E7C3D0D6B77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +31,19 @@ Global
 		{C6CA6D9E-DDA2-4553-A9FA-985BBBE68F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6CA6D9E-DDA2-4553-A9FA-985BBBE68F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6CA6D9E-DDA2-4553-A9FA-985BBBE68F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443EF379-F939-4CC2-9517-3E7C3D0D6B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443EF379-F939-4CC2-9517-3E7C3D0D6B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443EF379-F939-4CC2-9517-3E7C3D0D6B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443EF379-F939-4CC2-9517-3E7C3D0D6B77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DBCF3442-7A3E-4559-96B4-434CFE2D7978} = {E1ABF930-5AB9-4A0E-970A-C48E47D05DEF}
+		{DFB5EF7B-DA2C-44BF-ADF1-9876DF324E10} = {E1ABF930-5AB9-4A0E-970A-C48E47D05DEF}
+		{C6CA6D9E-DDA2-4553-A9FA-985BBBE68F50} = {E1ABF930-5AB9-4A0E-970A-C48E47D05DEF}
+		{443EF379-F939-4CC2-9517-3E7C3D0D6B77} = {E1ABF930-5AB9-4A0E-970A-C48E47D05DEF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {517A60D9-1377-4847-AEF4-430EC78068E0}
