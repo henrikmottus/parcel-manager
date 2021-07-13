@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using ParcelManager.API.Interfaces;
 using ParcelManager.Core.Entities;
 using ParcelManager.Core.Interfaces;
@@ -11,12 +12,17 @@ namespace ParcelManager.API.Services
     public class BagDtoService : IBagDtoService
     {
         private readonly IAsyncRepository<Bag> _bagRepository;
+        private readonly IValidator<Bag> _bagValidator;
 
         private readonly IMapper _mapper;
 
-        public BagDtoService(IAsyncRepository<Bag> bagRepository, IMapper mapper)
+        public BagDtoService(
+            IAsyncRepository<Bag> bagRepository,
+            IValidator<Bag> bagValidator,
+            IMapper mapper)
         {
             _bagRepository = bagRepository;
+            _bagValidator = bagValidator;
             _mapper = mapper;
         }
 

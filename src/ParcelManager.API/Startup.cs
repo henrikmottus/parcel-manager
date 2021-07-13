@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -9,7 +11,9 @@ using Microsoft.OpenApi.Models;
 using ParcelManager.API.Automapper.Profiles;
 using ParcelManager.API.Interfaces;
 using ParcelManager.API.Services;
+using ParcelManager.Core.Entities;
 using ParcelManager.Core.Interfaces;
+using ParcelManager.Core.Validators;
 using ParcelManager.Infrastructure.Data.Context;
 using ParcelManager.Infrastructure.Data.Repositories;
 using System.Text.Json;
@@ -48,9 +52,17 @@ namespace ParcelManager.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParcelManager", Version = "v1" });
             });
 
-            services.AddControllersWithViews().AddJsonOptions(jsonOptions =>
-                jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+            services.AddControllersWithViews()
+                .AddFluentValidation()
+                .AddJsonOptions(jsonOptions =>
+                    jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
             );
+
+            services.AddTransient<IValidator<Shipment>, ShipmentValidator>();
+            services.AddTransient<IValidator<Bag>, BagValidator>();
+            services.AddTransient<IValidator<BagWithLetters>, BagWithLettersValidator>();
+            services.AddTransient<IValidator<BagWithParcels>, BagWithParcelsValidator>();
+            services.AddTransient<IValidator<Parcel>, ParcelValidator>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

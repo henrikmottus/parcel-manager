@@ -25,6 +25,12 @@ namespace ParcelManager.Infrastructure.Data.Context
                 throw new ArgumentNullException(nameof(modelBuilder));
             }
 
+            modelBuilder.Entity<Shipment>().HasAlternateKey(s => s.ShipmentNumber);
+
+            modelBuilder.Entity<Bag>().HasAlternateKey(b => b.BagNumber);
+            
+            modelBuilder.Entity<Parcel>().HasAlternateKey(p => p.ParcelNumber);
+
             base.OnModelCreating(modelBuilder);
         }
 
