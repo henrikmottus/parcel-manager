@@ -24,12 +24,15 @@ namespace ParcelManager.API.Automapper.Profiles
                 .ForMember(dest => dest.LetterCount, opt => opt.MapFrom(src => src.Letters!.LetterCount))
                 .ForMember(dest => dest.Weight, opt => opt.MapFrom(src => src.Letters!.Weight))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Letters!.Price));
-            //CreateMap<Bag, BagDto>();
+            CreateMap<Bag, BagDto>()
+                .Include<BagWithParcels, BagDto>()
+                .Include<BagWithLetters, BagDto>();
+            CreateMap<BagWithParcels, BagDto>();
+            CreateMap<BagWithLetters, BagDto>();
             CreateMap<BagWithLetters, LettersDto>()
                 .ForMember(dest => dest.LetterCount, opt => opt.MapFrom(src => src.LetterCount))
                 .ForMember(dest => dest.Weight, opt => opt.MapFrom(src => src.Weight))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
-            CreateMap<BagWithLetters, BagDto>();
             CreateMap<IEnumerable<Bag>, BagListDto>()
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
             CreateMap<ParcelAddDto, Parcel>();

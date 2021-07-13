@@ -8,6 +8,6 @@ namespace ParcelManager.DTO.Bags
     {
         public string BagNumber { get; set; } = default!;
         public LettersDto? Letters { get; set; }
-        ParcelListDto Parcels { get; set; } = default!;
+        public ParcelListDto Parcels { get; set; } = default!;
     }
 }

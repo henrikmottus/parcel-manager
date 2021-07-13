@@ -16,12 +16,10 @@ namespace ParcelManager.Infrastructure.Data.Repositories
 
         public async Task<Shipment> GetWithBagsAndParcelsAsync(int id)
         {
-            var bagsWithParcels = _dbContext.BagsWithParcels;
-            var bagsWithLetters = _dbContext.BagsWithLetters;
-            return await _dbContext.Shipments
+            return await _dbContext.Set<Shipment>()
                 .AsNoTracking()
                 .Include(s => s.Bags)
-                .ThenInclude(b => ((BagWithParcels)b).Parcels)
+                .ThenInclude(b => (b as BagWithParcels).Parcels)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
     }
