@@ -8,9 +8,9 @@ namespace ParcelManager.DTO.Shipments
     public class ShipmentDto : BaseDto
     {
         public string ShipmentNumber { get; set; } = default!;
-        public Airports Airport { get; set; } = default!;
-        public string FlightNumber { get; set; } = default!;
-        public DateTime? FlightDate { get; set; } = default!;
+        public Airports? Airport { get; set; }
+        public string? FlightNumber { get; set; }
+        public DateTime? FlightDate { get; set; }
         public bool IsFinalized { get; set; }
 
         public BagListDto Bags { get; set; } = default!;

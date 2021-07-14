@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParcelManager.Infrastructure.Data.Context;
 
 namespace ParcelManager.Infrastructure.Migrations
 {
     [DbContext(typeof(ParcelContext))]
-    partial class ParcelContextModelSnapshot : ModelSnapshot
+    [Migration("20210714172549_db-entity-configurations")]
+    partial class dbentityconfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

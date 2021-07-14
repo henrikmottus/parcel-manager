@@ -1,9 +1,4 @@
 ﻿using ParcelManager.DTO.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParcelManager.DTO.Parcels
 {
@@ -12,7 +7,7 @@ namespace ParcelManager.DTO.Parcels
         public string ParcelNumber { get; set; } = default!;
         public string RecipientName { get; set; } = default!;
         public string DestinationCountry { get; set; } = default!;
-        public float Weight { get; set; } = default!;
-        public float Price { get; set; } = default!;
+        public decimal Weight { get; set; } = default!;
+        public decimal Price { get; set; } = default!;
     }
 }

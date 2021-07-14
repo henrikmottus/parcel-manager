@@ -9,5 +9,6 @@ namespace ParcelManager.API.Interfaces
         Task<ShipmentDto> GetShipment(int id);
         Task<ShipmentDto> AddShipment(ShipmentAddDto shipmentDto);
         Task<ShipmentDto> FinalizeShipment(int id);
+        Task<ShipmentDto> EditShipment(int id, ShipmentEditDto shipmentDto);
     }
 }

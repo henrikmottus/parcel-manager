@@ -25,11 +25,35 @@ namespace ParcelManager.Infrastructure.Data.Context
                 throw new ArgumentNullException(nameof(modelBuilder));
             }
 
-            modelBuilder.Entity<Shipment>().HasAlternateKey(s => s.ShipmentNumber);
+            modelBuilder.Entity<Shipment>(entity =>
+            {
+                entity.HasAlternateKey(s => s.ShipmentNumber);
+                entity.Property(s => s.ShipmentNumber).IsRequired().HasMaxLength(10).IsFixedLength();
+                entity.Property(s => s.FlightNumber).HasMaxLength(6).IsFixedLength();
+            });
 
-            modelBuilder.Entity<Bag>().HasAlternateKey(b => b.BagNumber);
+            modelBuilder.Entity<Bag>(entity =>
+            {
+                entity.HasAlternateKey(b => b.BagNumber);
+                entity.Property(b => b.BagNumber).IsRequired().HasMaxLength(15);
+            });
+
+            modelBuilder.Entity<BagWithLetters>(entity =>
+            {
+                entity.Property(b => b.LetterCount).IsRequired();
+                entity.Property(b => b.Weight).HasColumnType("decimal(10, 3)");
+                entity.Property(b => b.Price).HasColumnType("decimal(10, 2)");
+            });
             
-            modelBuilder.Entity<Parcel>().HasAlternateKey(p => p.ParcelNumber);
+            modelBuilder.Entity<Parcel>(entity =>
+            {
+                entity.HasAlternateKey(p => p.ParcelNumber);
+                entity.Property(b => b.ParcelNumber).IsRequired().HasMaxLength(10).IsFixedLength();
+                entity.Property(b => b.RecipientName).HasMaxLength(100);
+                entity.Property(b => b.DestinationCountry).HasMaxLength(2).IsFixedLength();
+                entity.Property(b => b.Weight).HasColumnType("decimal(10, 3)");
+                entity.Property(b => b.Price).HasColumnType("decimal(10, 2)");
+            });
 
             base.OnModelCreating(modelBuilder);
         }

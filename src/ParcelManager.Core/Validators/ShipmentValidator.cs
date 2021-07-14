@@ -1,20 +1,29 @@
 ﻿using FluentValidation;
 using ParcelManager.Core.Entities;
+using ParcelManager.DTO.Enums;
+using System;
 using System.Linq;
 
 namespace ParcelManager.Core.Validators
 {
     public class ShipmentValidator : AbstractValidator<Shipment>
     {
+        private const string SHIPMENT_NUMBER_REGEX = "[\\d|\\w]{3}-[\\d|\\w]{6}";
+        private const string FLIGHT_NUMBER_REGEX = "\\w{2}\\d{4}";
+
         public ShipmentValidator()
         {
             RuleFor(s => s.ShipmentNumber)
                 .NotNull()
-                .Matches("[\\d|\\w]{3}-[\\d|\\w]{6}");
+                .Matches(SHIPMENT_NUMBER_REGEX)
+                .WithMessage($"Shipment number must match the following regular expression: {SHIPMENT_NUMBER_REGEX}!");
             RuleFor(s => s.Airport)
-                .IsInEnum();
+                .IsInEnum()
+                .WithMessage($"Valid values for Airport: {string.Join(',', Enum.GetNames<Airports>())}");
             RuleFor(s => s.FlightNumber)
-                .Matches("\\w{2}\\d{4}");
+                .NotNull()
+                .Matches(FLIGHT_NUMBER_REGEX)
+                .WithMessage($"Flight number must match the following regular expression: {FLIGHT_NUMBER_REGEX}!");
             RuleFor(s => s.FlightDate)
                 .Must((shipment, flightDate) =>
                     !shipment.IsFinalized
@@ -28,55 +37,9 @@ namespace ParcelManager.Core.Validators
             RuleFor(s => s.Bags)
                 .Must((shipment, bags) =>
                     !shipment.IsFinalized
-                    || bags.Any(b => b is BagWithParcels bagWithParcels && !bagWithParcels.Parcels.Any()))
+                    || bags.Where(b => b is BagWithParcels).All(b => (b as BagWithParcels).Parcels.Any()))
                 .WithMessage("Finalized shipment can't contain empty bags!");
 
-        }
-    }
-
-    public class BagValidator : AbstractValidator<Bag>
-    {
-        public BagValidator()
-        {
-            RuleFor(s => s.BagNumber)
-                .NotNull()
-                .MaximumLength(15);
-        }
-    }
-
-    public class BagWithLettersValidator : AbstractValidator<BagWithLetters>
-    {
-        public BagWithLettersValidator()
-        {
-            RuleFor(s => s.LetterCount)
-                .GreaterThan(0);
-            RuleFor(s => s.Weight).ScalePrecision(0, 3);
-            RuleFor(s => s.Price).ScalePrecision(0, 2);
-        }
-    }
-
-    public class BagWithParcelsValidator : AbstractValidator<BagWithParcels>
-    {
-        public BagWithParcelsValidator()
-        {
-            RuleFor(b => b.Parcels).Must(list => list.Any());
-        }
-    }
-
-    public class ParcelValidator : AbstractValidator<Parcel>
-    {
-        public ParcelValidator()
-        {
-            RuleFor(s => s.ParcelNumber)
-                .NotNull()
-                .Matches("\\w{2}\\d{6}\\w{2}");
-            RuleFor(s => s.RecipientName)
-                .MaximumLength(100);
-            RuleFor(p => p.DestinationCountry)
-                .Length(2)
-                .Must(p => p.ToUpperInvariant() == p);
-            RuleFor(s => s.Weight).ScalePrecision(0, 3);
-            RuleFor(s => s.Price).ScalePrecision(0, 2);
         }
     }
 }

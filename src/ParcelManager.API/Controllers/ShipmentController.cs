@@ -45,6 +45,11 @@ namespace ParcelManager.API.Controllers
             };
         }
 
+        /// <summary>
+        /// Add shipment
+        /// </summary>
+        /// <param name="shipmentDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<Response<ShipmentDto>> Post([FromBody] ShipmentAddDto shipmentDto)
         {
@@ -53,6 +58,17 @@ namespace ParcelManager.API.Controllers
                 Status = ResponseStatuses.Success,
                 Message = "Successfully added shipment!",
                 Data = await _shipmentDtoService.AddShipment(shipmentDto)
+            };
+        }
+
+        [HttpPut("{id}")]
+        public async Task<Response<ShipmentDto>> Put(int id, [FromBody] ShipmentEditDto shipmentDto)
+        {
+            return new Response<ShipmentDto>
+            {
+                Status = ResponseStatuses.Success,
+                Message = "Successfully edited shipment!",
+                Data = await _shipmentDtoService.EditShipment(id, shipmentDto)
             };
         }
 

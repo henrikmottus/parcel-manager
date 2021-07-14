@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ParcelManager.API.Automapper.Profiles;
 using ParcelManager.API.Interfaces;
+using ParcelManager.API.Middlewares;
 using ParcelManager.API.Services;
 using ParcelManager.Core.Entities;
 using ParcelManager.Core.Interfaces;
@@ -55,7 +56,9 @@ namespace ParcelManager.API
             services.AddControllersWithViews()
                 .AddFluentValidation()
                 .AddJsonOptions(jsonOptions =>
-                    jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+                {
+                    jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                }
             );
 
             services.AddTransient<IValidator<Shipment>, ShipmentValidator>();
@@ -86,10 +89,13 @@ namespace ParcelManager.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseMiddleware<ErrorHandler>();
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
 
             app.UseRouting();
 

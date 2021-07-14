@@ -31,7 +31,26 @@ namespace ParcelManager.API.Services
         {
             var shipment = _mapper.Map<Shipment>(shipmentDto);
             _shipmentValidator.ValidateAndThrow(shipment);
+
+            var shipments = await _shipmentRepository.ListAsNoTrackingAsync();
+            if (shipments.Any(s => s.ShipmentNumber == shipment.ShipmentNumber))
+            {
+                throw new ApplicationException("Shipment number must be unique!");
+            }
+
             shipment = await _shipmentRepository.AddAsync(shipment);
+
+            return _mapper.Map<ShipmentDto>(shipment);
+        }
+
+        public async Task<ShipmentDto> EditShipment(int id, ShipmentEditDto shipmentDto)
+        {
+            var shipment = await _shipmentRepository.GetByIdAsync(id);
+            shipment.FlightDate = shipmentDto.FlightDate;
+
+            _shipmentValidator.ValidateAndThrow(shipment);
+
+            await _shipmentRepository.UpdateAsync(shipment);
 
             return _mapper.Map<ShipmentDto>(shipment);
         }
