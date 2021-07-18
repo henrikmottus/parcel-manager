@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ShipmentView } from '../ShipmentView/ShipmentView';
+import { ListItem, PageTitle } from '../shared/shared.styled';
 
-export function Home(props) {
+export function ShipmentList() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -11,18 +13,17 @@ export function Home(props) {
   }, [])
 
   return (
+    <>
+    <PageTitle>Home</PageTitle>
     <ul>
       { items && items.map((el) => 
-          <li key={el.id}>
-            <p>{el.shipmentNumber}</p>
-            <p>{el.airport}</p>
-            <p>{el.flightNumber}</p>
-            <p>{el.flightDate}</p>
-            <p>{el.isFinalized}</p>
+          <ListItem key={el.id}>
+            <ShipmentView data={el} />
             <Link to={`shipment/${el.id}`}>Details</Link>
-          </li>
+          </ListItem>
         )
       }
     </ul>
+    </>
   );
 }

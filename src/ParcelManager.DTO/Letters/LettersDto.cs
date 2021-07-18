@@ -2,7 +2,7 @@
 {
     public class LettersDto
     {
-        public int LetterCount { get; set; }
+        public int Count { get; set; }
         public decimal Weight { get; set; }
         public decimal Price { get; set; }
     }

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
+import { ShipmentView } from '../ShipmentView/ShipmentView';
+import { ListItem, PageTitle } from '../shared/shared.styled';
 
 export function Shipment(props) {
   const { id } = useParams();
   const [data, setData] = useState({});
+  const history = useHistory();
+
+  const goBack = () => {
+    history.goBack();
+  }
 
   useEffect(() => {
     fetch(`/api/Shipment/${id}`)
@@ -12,33 +19,23 @@ export function Shipment(props) {
   }, [])
 
   return (
+    <>
+    <PageTitle>Shipment</PageTitle>
     <div>
+      <button class="btn btn-link"  onClick={goBack}>Back</button >
       {
         data
           ? <>
-            <p>{data.shipmentNumber}</p>
-            <p>{data.airport}</p>
-            <p>{data.flightNumber}</p>
-            <p>{data.flightDate}</p>
-            <p>{data.isFinalized}</p>
+            <ShipmentView data={data} />
             <ul>
               {
                 data.bags?.items && data.bags.items.map((el) =>
-                  <li key={el.id}>
-                    <p>{el.bagNumber}</p>
-                    <p>{el.bagType}</p>
-                    {
-                      el.bagType === 'Letters'
-                        ? <>
-                          <p>{el.letters?.letterCount}</p>
-                          <p>{el.letters?.price}</p>
-                        </>
-                        : <>
-                          <p>{el.parcels?.items?.length}</p>
-                          <p>{el.parcels?.items?.reduce((sum, el) => sum + el.price, 0)}</p>
-                        </>
-                    }
-                  </li>
+                  <ListItem key={el.id}>
+                    <p> Bag Number : {el.bagNumber}</p>
+                    <p> Bag Type : {el.bagType}</p>
+                    <p> Number of {el.bagType} : {el[el.bagType.toLowerCase()]?.count}</p>
+                    <p> Price : {el[el.bagType.toLowerCase()]?.price}</p>
+                  </ListItem>
                 )
               }
             </ul>
@@ -46,5 +43,6 @@ export function Shipment(props) {
           : null
       }
     </div>
+    </>
   );
 }
