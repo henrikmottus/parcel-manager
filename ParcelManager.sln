@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelManager.DTO", "src\Pa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1696E0D6-8A4F-4A1A-B19D-5F7C26237488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageManager.API.Tests", "PackageManager.Api.Tests\PackageManager.API.Tests.csproj", "{1A48C02F-D4E4-4EBC-A1ED-5E70F0F4BBE8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageManager.API.Tests", "tests\PackageManager.Api.Tests\PackageManager.API.Tests.csproj", "{1A48C02F-D4E4-4EBC-A1ED-5E70F0F4BBE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

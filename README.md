@@ -11,4 +11,4 @@ This is a simple application for managing shipments, bags and parcels.
 6. Run *dotnet ef database update --startup-project .\src\ParcelManager.API\ --project .\src\ParcelManager.Infrastructure\*
 7. Start the application
   7.1. In Visual Studio, make sure the startup project is set as ParcelManager.API, then press F5
-  7.2. In VS Code, it should be enough to allow VS Code to setup the configuration, then press F5.
+  7.2. In VS Code, it should be enough to press F5 when a .cs file in ParcelManager.API is opened, and accept the prompt.

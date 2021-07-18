@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ParcelManager.API\ParcelManager.API.csproj" />
-    <ProjectReference Include="..\src\ParcelManager.Core\ParcelManager.Core.csproj" />
+    <ProjectReference Include="..\..\src\ParcelManager.API\ParcelManager.API.csproj" />
+    <ProjectReference Include="..\..\src\ParcelManager.Core\ParcelManager.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
