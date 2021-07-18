@@ -46,7 +46,7 @@ namespace ParcelManager.API.Services
         public async Task<ShipmentDto> EditShipment(int id, ShipmentEditDto shipmentDto)
         {
             var shipment = await _shipmentRepository.GetByIdAsync(id);
-            shipment.FlightDate = shipmentDto.FlightDate;
+            shipment.EditShipment(shipmentDto);
 
             _shipmentValidator.ValidateAndThrow(shipment);
 
@@ -57,9 +57,9 @@ namespace ParcelManager.API.Services
 
         public async Task<ShipmentDto> FinalizeShipment(int id)
         {
-            var shipment = await _shipmentRepository.GetWithBagsAndParcelsAsync(id);
+            var shipment = await _shipmentRepository.GetWithBagsAndParcelsAsync(id, asNoTracking: false);
 
-            shipment.IsFinalized = true;
+            shipment.FinalizeShipment();
 
             _shipmentValidator.ValidateAndThrow(shipment);
 
@@ -70,7 +70,7 @@ namespace ParcelManager.API.Services
 
         public async Task<ShipmentDto> GetShipment(int id)
         {
-            var shipment = await _shipmentRepository.GetWithBagsAndParcelsAsync(id);
+            var shipment = await _shipmentRepository.GetWithBagsAndParcelsAsync(id, asNoTracking: true);
 
             return _mapper.Map<ShipmentDto>(shipment);
         }

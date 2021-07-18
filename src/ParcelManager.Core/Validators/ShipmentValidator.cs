@@ -8,8 +8,8 @@ namespace ParcelManager.Core.Validators
 {
     public class ShipmentValidator : AbstractValidator<Shipment>
     {
-        private const string SHIPMENT_NUMBER_REGEX = "[\\d|\\w]{3}-[\\d|\\w]{6}";
-        private const string FLIGHT_NUMBER_REGEX = "\\w{2}\\d{4}";
+        private const string SHIPMENT_NUMBER_REGEX = "^[\\d|\\w]{3}-[\\d|\\w]{6}$";
+        private const string FLIGHT_NUMBER_REGEX = "^\\w{2}\\d{4}$";
 
         public ShipmentValidator()
         {
@@ -27,7 +27,7 @@ namespace ParcelManager.Core.Validators
             RuleFor(s => s.FlightDate)
                 .Must((shipment, flightDate) =>
                     !shipment.IsFinalized
-                    || flightDate > System.DateTime.Now)
+                    || flightDate > DateTime.Now)
                 .WithMessage("Flight date must be in the future when finalizing shipment!");
             RuleFor(s => s.Bags)
                 .Must((shipment, bags) =>
@@ -37,7 +37,7 @@ namespace ParcelManager.Core.Validators
             RuleFor(s => s.Bags)
                 .Must((shipment, bags) =>
                     !shipment.IsFinalized
-                    || bags.Where(b => b is BagWithParcels).All(b => (b as BagWithParcels).Parcels.Any()))
+                    || bags.Where(b => b is BagWithParcels bag && bag is not null).All(b => (b as BagWithParcels)!.Parcels.Any()))
                 .WithMessage("Finalized shipment can't contain empty bags!");
 
         }

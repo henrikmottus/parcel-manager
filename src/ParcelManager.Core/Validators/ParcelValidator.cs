@@ -5,7 +5,7 @@ namespace ParcelManager.Core.Validators
 {
     public class ParcelValidator : AbstractValidator<Parcel>
     {
-        private const string PARCEL_NUMBER_REGEX = "\\w{2}\\d{6}\\w{2}";
+        private const string PARCEL_NUMBER_REGEX = "^\\w{2}\\d{6}\\w{2}$";
 
         public ParcelValidator()
         {
