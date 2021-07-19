@@ -8,6 +8,7 @@ namespace PackageManager.API.Tests
     public class ShipmentTests
     {
         private Shipment _shipment;
+
         [SetUp]
         public void Setup()
         {
@@ -21,7 +22,7 @@ namespace PackageManager.API.Tests
         }
 
         [Test]
-        public void ShouldEditShipmentSuccessfully()
+        public void ShouldEditFlightDateSuccessfully()
         {
             var editDto = new ShipmentEditDto
             {
@@ -33,6 +34,22 @@ namespace PackageManager.API.Tests
         }
 
         [Test]
+        public void ShouldFinalizeShipmentSuccessfully()
+        {
+            _shipment.FinalizeShipment();
+
+            Assert.IsTrue(_shipment.IsFinalized);
+        }
+
+        [Test]
+        public void ShouldFailFinalizingShipmentWhenItHasAlreadyBeenFinalized()
+        {
+            _shipment.IsFinalized = true;
+
+            Assert.Throws<ApplicationException>(() => _shipment.FinalizeShipment());
+        }
+
+        [Test]
         public void ShouldFailEditingShipmentBecauseItIsFinalized()
         {
             _shipment.IsFinalized = true;
@@ -40,18 +57,8 @@ namespace PackageManager.API.Tests
             {
                 FlightDate = DateTime.UtcNow
             };
-            try
-            {
-                _shipment.EditShipment(editDto);
-            }
-            catch
-            {
 
-            }
-            finally
-            {
-                Assert.AreNotEqual(editDto.FlightDate, _shipment.FlightDate);
-            }
+            Assert.Throws<ApplicationException>(() => _shipment.EditShipment(editDto));
         }
     }
 }
