@@ -19,8 +19,4 @@
     <ProjectReference Include="..\..\src\ParcelManager.Core\ParcelManager.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FunctionalTests\" />
-  </ItemGroup>
-
 </Project>
